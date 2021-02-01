@@ -6,6 +6,7 @@ export const menuAbout = document.getElementById('menu-about')
 
 //forms
 export const formSignin = document.getElementById('form-signin')
+export const formCreateThread = document.getElementById('form-create-thread')
 
 //main content of each page
 export const mainContent = document.getElementById('main-content')

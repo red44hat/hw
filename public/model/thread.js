@@ -1,14 +1,13 @@
-
 export class Thread {
-    constructor(data){
-        this.uid = data.uid
+    constructor(data) {
+        this.uid  = data.uid
         this.email = data.email
         this.title = data.title
         this.timeStamp = data.timeStamp
         this.content = data.content
         this.keyWordsArray = data.keyWordsArray
-
     }
+
 
     serialize(){
         return {
