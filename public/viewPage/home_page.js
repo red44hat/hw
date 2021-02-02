@@ -4,6 +4,7 @@ import * as Auth from '../controller/auth.js'
 import * as Constant from '../model/constant.js'
 import { Thread } from '../model/thread.js'
 import * as FirebaseController from '../controller/firebase_controller.js'
+import * as Util from './util.js'
 
 
 export function addEventListeners(){
@@ -12,21 +13,23 @@ export function addEventListeners(){
         home_page()
     })
 
-    Element.formCreateThread.addEventListener('submit', async e =>{
+    Element.formCreateThread.addEventListener('submit', async e => {
         e.preventDefault()
         const uid = Auth.currentUser.uid
         const email = Auth.currentUser.email
-        const timeStamp = Date.now()
+        const timestamp = Date.now()
         const title = Element.formCreateThread.title.value
         const content = Element.formCreateThread.content.value
         const keywords = Element.formCreateThread.keywords.value
-        const keyWordsArray = keywords.toLowerCase().match(/\S+/g)
+        const keywordsArray = keywords.toLowerCase().match(/\S+/g) 
         const thread = new Thread(
-            {uid,email,title,keyWordsArray,content,timeStamp}
+            {uid,email,title,keywordsArray,content,timestamp}
         )
         try{
             const docID = await FirebaseController.addThread(thread)
             thread.docID = docID
+            home_page()
+            Util.popupInfo('Success','A new thread has been created',Constant.iDmodalCreateNewThread)
         }catch(e){
             console.log(e)
 
