@@ -48,21 +48,22 @@ export async function home_page() {
     }
 
     let html = `
-    <button class="btn btn-outline-danger" data-toggle="modal" data-target="#${Constant.iDmodalCreateNewThread}">+ New Thread</button>
+        <button class="btn btn-outline-danger" data-toggle="modal" data-target="#${Constant.iDmodalCreateNewThread}">+ New Thread</button>
     `
+
     html += `
     <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Action</th>
-      <th scope="col">Title</th>
-      <th scope="col">Keywords</th>
-      <th scope="col">Posted By</th>
-      <th scope="col">Content</th>
-      <th scope="col">Posted At</th>
-    </tr>
-  </thead>
-  <tbody>
+    <thead>
+      <tr>
+        <th scope="col">Action</th>
+        <th scope="col">Title</th>
+        <th scope="col">Keywords</th>
+        <th scope="col">Posted By</th>
+        <th scope="col>Content</th>
+        <th scope="col>Posted At</th>
+      </tr>
+    </thead>
+    <tbody>
     `
 
     threadList.forEach(thread => {
@@ -71,24 +72,24 @@ export async function home_page() {
     
     
 
-    html = `
+    html += `
         </tbody></table>
     `
 
     Element.mainContent.innerHTML = html
 }
 
-function buildThreadView(thread) {
+function buildThreadView(thread){
     return `
         <tr>
             <td>View</td>
             <td>${thread.title}</td>
-            <td>${thread.keyWordsArray.join('')}</td>
+            <td>${thread.keywordsArray.join(' ')}</td>
             <td>${thread.email}</td>
             <td>${thread.content}</td>
-            <td>${new Date(thread.timeStamp).toString()}</td>
+            <td>${new Date(thread.timestamp).toString()}</td>
         </tr>
     `
 }
 
-
+  

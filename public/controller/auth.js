@@ -6,57 +6,55 @@ import * as Routes from '../controller/routes.js'
 
 export let currentUser
 
-
 export function addEventListeners(){
-     Element.formSignin.addEventListener('submit', async (e) => {
+    Element.formSignin.addEventListener('submit', async e =>{
         e.preventDefault()
         const email = Element.formSignin.email.value;
-        const password= Element.formSignin.password.value;
+        const password = Element.formSignin.password.value;
 
-
-        try {
-            await FirebaseController.signIn(email,password)
-            //dismiss
+        try{
+            await FirebaseController.signIn(email, password)
+            //dismiss sign in modal
             $('#'+Constant.iDmodalSigninForm).modal('hide')
-            }catch(e) {
+        } catch(e)
+        {
             console.log(e)
-            Util.popupInfo('Sign in error', JSON.stringify(e),Constant.iDmodalSigninForm)
-            }
-
-
+            Util.popupInfo('Sign in Error', JSON.stringify(e), Constant.iDmodalSigninForm)
+        }
     });
 
-
-    Element.menuSignout.addEventListener('click', async () => {
-        try {
-             await FirebaseController.signOut()
-            }catch (e){
-                 console.log(e)
-                }
-            })
-
-    firebase.auth().onAuthStateChanged(user=>{
-        if (user) {
-        currentUser = user
-        let elements = document.getElementsByClassName('modal-menus-pre-auth')
-        for(let i=0; i < elements.length; i++) elements[i].style.display='none'
-        elements = document.getElementsByClassName('modal-menus-post-auth')
-        for(let i=0; i< elements.length; i++) elements[i].style.display='block'
-
-        //routing for page reload
-        const pathname = window.location.pathname
-        const href = window.location.pathname
-        Routes.routing(pathname,href)
-        }else{
-        currentUser=null
-        let elements = document.getElementsByClassName('modal-menus-pre-auth')
-        for(let i=0; i< elements.length; i++) elements[i].style.display='block'
-        elements = document.getElementsByClassName('modal-menus-post-auth')
-        for(let i=0; i< elements.length; i++) elements[i].style.display='none'
-
-        history.pushState(null,null,Routes.routePath.HOME)
-        Element.mainContent.innerHTML = '<h1>Signed Out </h1>'
-    }
+    Element.menuSignout.addEventListener('click', async () =>{
+        try{
+            await FirebaseController.signOut()
+        }
+        catch(e)
+        {
+            console.log(e)
+        }
     })
 
-} 
+    firebase.auth().onAuthStateChanged(user =>{
+        if(user) {
+            currentUser = user
+            let elements = document.getElementsByClassName('modal-menus-pre-auth')
+            for(let i = 0; i <elements.length; i++) elements[i].style.display = 'none'
+            elements = document.getElementsByClassName('modal-menus-post-auth')
+            for(let i = 0; i <elements.length; i++) elements[i].style.display = 'block'
+
+            //routing for page reloading
+            const pathname = window.location.pathname
+            const href = window.location.href
+            Routes.routing(pathname, href)
+        }
+        else{
+            currentUser = null
+            let elements = document.getElementsByClassName('modal-menus-pre-auth')
+            for(let i = 0; i <elements.length; i++) elements[i].style.display = 'block'
+            elements = document.getElementsByClassName('modal-menus-post-auth')
+            for(let i = 0; i <elements.length; i++) elements[i].style.display = 'none'
+
+            history.pushState(null, null, Routes.routePath.HOME)
+            Element.mainContent.innerHTML = '<h1>Signed Out</h1>'
+        }
+    })
+}

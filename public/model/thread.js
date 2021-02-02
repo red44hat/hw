@@ -1,23 +1,23 @@
 export class Thread {
-    constructor(data) {
-        this.uid  = data.uid
+    constructor(data)
+    {
+        this.uid = data.uid
         this.email = data.email
         this.title = data.title
-        this.timeStamp = data.timeStamp
+        this.timestamp = data.timestamp
         this.content = data.content
-        this.keyWordsArray = data.keyWordsArray
+        this.keywordsArray = data.keywordsArray
     }
 
-
-    serialize(){
+    //store objects of thread into firebase store, but they need to be converted to plain js object
+    serialize(){//translates objects to js plain
         return {
             uid: this.uid,
             email: this.email,
             title: this.title,
-            timeStamp: this.timeStamp,
+            timestamp: this.timestamp,
             content: this.content,
-            keyWordsArray: this.keyWordsArray
-
+            keywordsArray: this.keywordsArray
         }
     }
 }

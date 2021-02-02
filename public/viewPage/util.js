@@ -1,13 +1,14 @@
 import * as Element from './element.js'
 import * as Constant from '../model/constant.js'
 
-export function popupInfo(title,body,modal){
-
-    if (modal ){
+export function popupInfo(title, body, modal){//third parameter to dismiss modal before popup
+    if(modal)
+    {
         $('#'+modal).modal('hide')
     }
     Element.popupInfoTitle.innerHTML = title
     Element.popupInfoBody.innerHTML = body
-    $('#'+Constant.iDmodalPopUpInfo).modal('show')
+    $('#'+Constant.iDmodalpopupInfo).modal('show')
+
 }
 
