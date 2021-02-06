@@ -18,7 +18,7 @@ export function addEventListeners(){
             $('#'+Constant.iDmodalSigninForm).modal('hide')
         } catch(e)
         {
-            console.log(e)
+            if(Constant.DEV) console.log(e)
             Util.popupInfo('Sign in Error', JSON.stringify(e), Constant.iDmodalSigninForm)
         }
     });
@@ -29,7 +29,8 @@ export function addEventListeners(){
         }
         catch(e)
         {
-            console.log(e)
+          if(Constant.DEV)  console.log(e)
+          Util.popupInfo('Sign out error', JSON.stringify(e))
         }
     })
 

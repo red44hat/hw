@@ -29,3 +29,25 @@ export async function getThreadlist(){
     })
     return threadList
 }
+
+export async function getOneThread(threadId) {
+  const ref = await firebase
+    .firestore()
+    .collection(Constant.collectionName.THREADS)
+    .doc(threadId)
+    .get();
+  const t = new Thread(ref.data());
+  t.docId = threadId;
+  return t;
+}
+
+export async function addMessage(message) {
+  const ref = await firebase
+    .firestore()
+    .collection(Constant.collectionName.MESSAGES)
+    .add(message.serialize());
+  return ref.id;
+}
+
+
+
