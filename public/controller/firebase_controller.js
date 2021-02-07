@@ -1,4 +1,5 @@
 import * as Constant from '../model/constant.js'
+import { Message } from '../model/message.js'
 import { Thread } from '../model/thread.js'
 
 export async function signIn(email, password){
@@ -49,5 +50,18 @@ export async function addMessage(message) {
   return ref.id;
 }
 
+
+export async function getMessageList(threadId) {
+	const snapShot = await firebase.firestore().collection(Constant.collectionName.MESSAGES)
+	.where('threadId','==',threadId)
+	.orderBy('timestamp')
+	.get()
+const message = []
+snapShot.forEach(doc=>{
+	const m = new Message(doc.data())
+	m.docId = doc.id
+	message.push(m)
+})
+}
 
 

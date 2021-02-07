@@ -29,10 +29,12 @@ export async function thread_page(threadId){
 //display this thread
 //display all reply message
 // a form to add a new reply
-let thread;
+let thread
+let messages
 
 try {
   thread = await FirebaseController.getOneThread(threadId);
+  messages = await FirebaseController.getMessageList(threadId)
 } catch (e) {
   if (Constant.DEV) console.log(e);
   Util.popupInfo("Error", JSON.stringify(e));
@@ -42,11 +44,17 @@ try {
 let html = `
 	<h4 class "bg-primary text-white">${thread.title}</h4>
 	<div>${thread.email} (At ${new Date(thread.timestamp).toString()})</div>
-	<div class ="bg-secondary text-white">${thread.content}</div>
+    <div class ="bg-secondary text-white">${thread.content}</div>
+    <hr>
 `;
 
 html += '<div id ="message-reply-body">'
-
+//display all reply message
+if (messages && messages.length >0){
+	messages.forEach(m => {
+		html += buildMessageView(m)
+})
+}
 //display all reply messages
 html += '</div>'
 
@@ -78,4 +86,15 @@ html += `
             Util.popupInfo('Error',JSON.stringify(e))
         }
     })
+}
+
+function buildMessageView(message){
+	return `
+		<div class="bd-info text-whtie">
+		Replied by ${message.email} (At ${new Date(message.timestamp).toString()})
+		<br>
+		${message.content}
+        </div>
+        <hr>
+		`
 }
