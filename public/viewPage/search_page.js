@@ -29,7 +29,7 @@ export async function search_page(keywordsArray){
         Element.mainContent.innerHTML = '<h1>Protected Page<h1>'
         return
     }
-    let threadList //not showing what I need vid 28-29
+    let threadList 
     try{
         //search from firestore
         threadList = await FirebaseController.searchThreads(keywordsArray)
