@@ -35,3 +35,7 @@ hr {
 .modal-menus-post-auth{
     display:none;
 }
+
+.error-signup{
+    color:red
+}

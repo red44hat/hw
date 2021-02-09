@@ -12,15 +12,19 @@ export function addEventListeners(){
         const email = Element.formSignin.email.value;
         const password = Element.formSignin.password.value;
 
+        const button = Element.formSignin.getElementsByTagName('button')[0]
+        const orignalLabel = Util.disableButton(button)
+
         try{
             await FirebaseController.signIn(email, password)
             //dismiss sign in modal
             $('#'+Constant.iDmodalSigninForm).modal('hide')
         } catch(e)
         {
-            if(Constant.DEV) console.log(e)
+            if(Constant.DEV()) console.log(e)
             Util.popupInfo('Sign in Error', JSON.stringify(e), Constant.iDmodalSigninForm)
         }
+        Util.enableButton(button, orignalLabel)
     });
 
     Element.menuSignout.addEventListener('click', async () =>{
@@ -29,8 +33,8 @@ export function addEventListeners(){
         }
         catch(e)
         {
-          if(Constant.DEV)  console.log(e)
-          Util.popupInfo('Sign out error', JSON.stringify(e))
+         if(Constant.DEV)  console.log(e)
+         Util.popupInfo('Sign our error', JSON.stringify(e))
         }
     })
 
@@ -56,6 +60,41 @@ export function addEventListeners(){
 
             history.pushState(null, null, Routes.routePath.HOME)
             Element.mainContent.innerHTML = '<h1>Signed Out</h1>'
+        }
+    })
+
+    Element.formSignUp.addEventListener('submit', async e=> {
+        e.preventDefault()
+        const email = e.target.email.value
+        const password = e.target.password.value
+        const passworConfirm = e.target.passwordConfirm.value
+
+        //reset error messages on create new account
+        const errorTags = document.getElementsByClassName('error-signup')
+        for(let i = 0; i <errorTags.length; i++)
+        {
+            errorTags[i].innerHTML = ''
+        }
+
+        let valid = true //input validation
+        if(password.length < 6){
+            document.getElementById('signup-error-password')
+                .innerHTML = 'password must be at least 6 characters'
+            valid = false
+        }
+        if(passworConfirm != password){
+            document.getElementById('signup-error-passwordConfirm')
+                .innerHTML = 'confirm password does not match'
+                valid = false
+        }
+        if(!valid) return
+
+        try{    
+            await FirebaseController.signUp(email, password)
+            Util.popupInfo('Account Created', 'You are signed in now', 'modal-create-new-account')
+        }catch(e){
+            if(Constant.DEV) console.log(e)
+            Util.popupInfo('Failed to create an account', JSON.stringify(e), 'modal-create-new-account')
         }
     })
 }

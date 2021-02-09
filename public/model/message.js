@@ -1,5 +1,5 @@
 
-export class  Message {
+export class Message{
     constructor(data){
         this.threadId = data.threadId
         this.uid = data.uid
@@ -8,15 +8,13 @@ export class  Message {
         this.content = data.content
     }
 
-
-    serialize( ){
+    serialize() {
         return {
             threadId: this.threadId,
             uid: this.uid,
             email: this.email,
             timestamp: this.timestamp,
             content: this.content
-
         }
     }
 }

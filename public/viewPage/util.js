@@ -1,13 +1,30 @@
 import * as Element from './element.js'
 import * as Constant from '../model/constant.js'
 
-export function popupInfo(title,body,modal){
-
-    if (modal ){
+export function popupInfo(title, body, modal){//third parameter to dismiss modal before popup
+    if(modal)
+    {
         $('#'+modal).modal('hide')
     }
     Element.popupInfoTitle.innerHTML = title
     Element.popupInfoBody.innerHTML = body
     $('#'+Constant.iDmodalpopupInfo).modal('show')
+
+}
+
+export function disableButton(button){
+    button.disabled = true
+    const originalLabel = button.innerHTML
+    button.innerHTML = 'Wait...'
+    return originalLabel
+}
+
+export function enableButton(button, originalLabel){
+    if(originalLabel) button.innerHTML = originalLabel
+    button.disabled = false
+}
+
+export function sleep(ms){
+    return new Promise(resolve => setTimeout(resolve, ms)) //promise is prior version of await async
 }
 

@@ -9,7 +9,7 @@ export class Thread {
         this.keywordsArray = data.keywordsArray
     }
 
-   
+    //store objects of thread into firebase store, but they need to be converted to plain js object
     serialize(){//translates objects to js plain
         return {
             uid: this.uid,
